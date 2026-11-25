@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>HK Cheap Eats · 港慳食</title>
+<meta name="description" content="Cheap, good meals across all 18 districts of Hong Kong — set lunches, afternoon tea and late-night bites, open now and near you. English · 繁體 · 简体.">
+<meta name="theme-color" content="#F7F4EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0C11" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="HK Cheap Eats · 港慳食">
+<meta property="og:description" content="Eat well in Hong Kong for under $50. 平 · 靚 · 正">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hk-cheapeats.github.io/">
+<meta property="og:image" content="https://hk-cheapeats.github.io/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="canonical" href="https://hk-cheapeats.github.io/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23D7392A'/%3E%3Ctext x='32' y='45' font-size='38' text-anchor='middle' fill='white' font-family='serif' font-weight='900'%3E慳%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..700&family=Inter:wght@400;500;600;700&family=Noto+Sans+HK:wght@400;500;700&family=Noto+Serif+HK:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="vendor/markercluster/MarkerCluster.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="brand" href="#" data-go="deals" aria-label="HK Cheap Eats home">
+      <span class="brand-seal">慳</span>
+      <span class="brand-txt"><b>HK Cheap Eats</b><small>港 慳 食</small></span>
+    </a>
+    <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+    <label class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" autocomplete="off" aria-label="Search">
+      <kbd>/</kbd>
+    </label>
+    <div class="hdr-act">
+      <div class="seg" id="lang" role="group" aria-label="Language">
+        <button data-l="en">EN</button><button data-l="hant">繁</button><button data-l="hans">简</button>
+      </div>
+      <button class="icon-btn" id="theme-btn" aria-label="Toggle dark mode"></button>
+      <button class="btn btn-ghost auth-btn" id="auth-btn"></button>
+      <button class="btn btn-ink" id="share-btn"></button>
+    </div>
+  </div>
+</header>
+
+<section class="view" id="v-deals">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <div class="kicker" id="kicker"></div>
+        <h1 class="hero-h" id="hero-h"></h1>
+        <p class="hero-p" id="hero-p"></p>
+        <label class="hero-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="hq" type="search" autocomplete="off" enterkeyhint="search" aria-label="Search">
+        </label>
+        <div class="hero-cta">
+          <button class="btn btn-red btn-lg" id="spin-btn"></button>
+          <button class="btn btn-ghost btn-lg" id="near-btn"></button>
+        </div>
+        <div class="quick" id="quick"></div>
+      </div>
+      <div id="spotlight"></div>
+    </div>
+  </div>
+  <div class="ticker" id="ticker" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="sec-h" id="cols-h"></div>
+    <div class="cats" id="cols"></div>
+    <div id="rails"></div>
+    <div class="promo" id="promo" role="button" tabindex="0"></div>
+
+    <div class="toolbar" id="toolbar">
+      <div class="rail" id="rail"></div>
+      <div class="tool-r">
+        <button class="btn btn-ghost" id="filter-btn"></button>
+        <select class="select" id="sort" aria-label="Sort"></select>
+      </div>
+    </div>
+    <div class="active-row" id="active-row"></div>
+    <div class="grid" id="grid"></div>
+    <footer class="foot" id="foot"></footer>
+  </div>
+</section>
+
+<section class="view" id="v-map">
+  <div class="wrap">
+    <div class="mapwrap">
+      <div class="maprail">
+        <div class="mr-h"><h2 id="map-t"></h2><p id="map-s"></p><div class="map-tools" id="map-tools"></div></div>
+        <div id="maplist"></div>
+      </div>
+      <div id="map"></div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="v-saved"><div class="wrap" id="saved-in"></div></section>
+<section class="view" id="v-guide"><div class="wrap" id="guide-in"></div></section>
+<section class="view" id="v-me"><div class="wrap" id="me-in"></div></section>
+
+<nav class="botnav" id="botnav" aria-label="Sections"></nav>
+
+<div class="ov" id="ov-deal" role="dialog" aria-modal="true"><div class="ov-bg"></div><div class="side" id="deal-in"></div></div>
+<div class="ov" id="ov-filters" role="dialog" aria-modal="true"><div class="ov-bg"></div><div class="side" id="filters-in"></div></div>
+<div class="ov" id="ov-spin" role="dialog" aria-modal="true"><div class="ov-bg"></div><div class="center" id="spin-in"></div></div>
+<div class="ov" id="ov-submit" role="dialog" aria-modal="true"><div class="ov-bg"></div><div class="center" id="submit-in"></div></div>
+<div class="ov" id="ov-report" role="dialog" aria-modal="true"><div class="ov-bg"></div><div class="center" id="report-in"></div></div>
+<div class="ov" id="ov-review" role="dialog" aria-modal="true"><div class="ov-bg"></div><div class="center" id="review-in"></div></div>
+<div class="ov" id="ov-auth" role="dialog" aria-modal="true"><div class="ov-bg"></div><div class="center" id="auth-in"></div></div>
+<div class="ov" id="ov-menu" role="dialog" aria-modal="true"><div class="ov-bg"></div><div class="center" id="menu-in"></div></div>
+<div class="ov" id="ov-group" role="dialog" aria-modal="true"><div class="ov-bg"></div><div class="side" id="group-in"></div></div>
+<div class="ov" id="ov-msg" role="dialog" aria-modal="true"><div class="ov-bg"></div><div class="center" id="msg-in"></div></div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="vendor/markercluster/leaflet.markercluster.js"></script>
+<script src="vendor/supabase/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/i18n-v4.js"></script>
+<script src="js/i18n-v6.js"></script>
+<script src="js/mtr.js"></script>
+<script src="js/value.js"></script>
+<script src="js/data.js"></script>
+<script src="js/backend.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
